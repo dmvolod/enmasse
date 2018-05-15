@@ -181,7 +181,7 @@ public class TestUtils {
      */
     public static String printPods(List<Pod> pods) {
         return pods.stream()
-                .map(pod -> pod.getMetadata().getName())
+                .map(pod -> "{" + pod.getMetadata().getName() + ", " + pod.getStatus().getPhase() + "}")
                 .collect(Collectors.joining(","));
     }
 
