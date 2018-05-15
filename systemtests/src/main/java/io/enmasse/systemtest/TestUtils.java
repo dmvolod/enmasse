@@ -29,6 +29,7 @@ import java.util.stream.IntStream;
 
 public class TestUtils {
     private static Logger log = CustomLogger.getLogger();
+    private static Set<String> validDestinationTypes = new HashSet<>(Arrays.asList("queue", "topic", "anycast", "multicast"));
 
     /**
      * scale up/down specific Destination (type: StatefulSet) in address space
@@ -606,22 +607,16 @@ public class TestUtils {
      */
     private static Destination getDestinationObject(JsonObject addressJsonObject) {
         log.info("Got address object: {}", addressJsonObject.toString());
+        JsonObject metadata = addressJsonObject.getJsonObject("metadata");
+        String name = metadata.getString("name");
         JsonObject spec = addressJsonObject.getJsonObject("spec");
         String address = spec.getString("address");
         String type = spec.getString("type");
         String plan = spec.getString("plan");
-        switch (type) {
-            case "queue":
-                return Destination.queue(address, plan);
-            case "topic":
-                return Destination.topic(address, plan);
-            case "anycast":
-                return Destination.anycast(address, plan);
-            case "multicast":
-                return Destination.multicast(address, plan);
-            default:
-                throw new IllegalStateException(String.format("Unknown Destination type'%s'", type));
+        if (!validDestinationTypes.contains(type)) {
+            throw new IllegalStateException(String.format("Unknown Destination type'%s'", type));
         }
+        return new Destination(name, address, type, plan);
     }
 
     /**
