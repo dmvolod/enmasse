@@ -27,10 +27,7 @@ import org.jboss.resteasy.plugins.server.vertx.VertxResteasyDeployment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerRequestFilter;
 import java.io.File;
-import java.io.IOException;
 
 /**
  * HTTP server for deploying address config
@@ -78,6 +75,7 @@ public class HTTPServer extends AbstractVerticle {
         }
 
         deployment.getRegistry().addSingletonResource(new SwaggerSpecEndpoint());
+        deployment.getRegistry().addSingletonResource(new HttpNestedAddressService(addressSpaceApi, schemaProvider));
         deployment.getRegistry().addSingletonResource(new HttpAddressService(addressSpaceApi, schemaProvider));
         deployment.getRegistry().addSingletonResource(new HttpSchemaService(schemaProvider));
         deployment.getRegistry().addSingletonResource(new HttpAddressSpaceService(addressSpaceApi, schemaProvider));

@@ -79,7 +79,6 @@ public class ConfigMapAddressSpaceApi implements AddressSpaceApi, ListerWatcher<
         Map<String, String> labels = new HashMap<>(addressSpace.getLabels());
         String name = getConfigMapName(addressSpace.getNamespace(), addressSpace.getName());
         labels.put(LabelKeys.TYPE, "address-space");
-        labels.put(LabelKeys.NAMESPACE, addressSpace.getNamespace());
         config.withNewMetadata()
                 .withName(name)
                 .addToLabels(labels)

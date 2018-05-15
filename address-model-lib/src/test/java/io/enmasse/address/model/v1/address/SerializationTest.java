@@ -96,6 +96,17 @@ public class SerializationTest {
         assertThat(deserialized, is(list));
     }
 
+    @Test(expected = DeserializeException.class)
+    public void testSerializeAddressSpaceWithIllegalName() throws IOException {
+        AddressSpace addressSpace = new AddressSpace.Builder()
+                .setName("myspace.bar")
+                .setPlan("myplan")
+                .setType("mytype")
+                .build();
+
+        String serialized = CodecV1.getMapper().writeValueAsString(addressSpace);
+        CodecV1.getMapper().readValue(serialized, AddressSpace.class);
+    }
 
     @Test
     public void testSerializeAddressSpace() throws IOException {

@@ -39,7 +39,9 @@ public class HttpApiRootService {
     private static final APIResourceList apiResourceList = new APIResourceList("v1", "APIResourceList", "enmasse.io/v1",
         Arrays.asList(
                 new APIResource("addressspaces", "", true, "AddressSpace",
-                    Arrays.asList("create", "delete", "get", "list"))));
+                    Arrays.asList("create", "delete", "get", "list")),
+                new APIResource("addresses", "", true, "Address",
+                                Arrays.asList("create", "delete", "get", "list"))));
 
     @GET
     @Path("enmasse.io/v1")
