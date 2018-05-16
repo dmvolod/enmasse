@@ -325,7 +325,7 @@ public class AddressApiClient {
             metadata.put("name", destination.getName());
         }
         if (destination.getUuid() != null) {
-            metadata.put("uuid", destination.getUuid());
+            metadata.put("uid", destination.getUuid());
         }
         if (destination.getAddressSpace() != null) {
             metadata.put("addressSpace", destination.getAddressSpace());

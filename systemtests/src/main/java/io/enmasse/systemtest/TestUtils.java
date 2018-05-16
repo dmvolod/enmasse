@@ -564,7 +564,7 @@ public class TestUtils {
 
         JsonObject metadata = addressJsonObject.getJsonObject("metadata");
         String name = metadata.getString("name");
-        String uuid = metadata.getString("uuid");
+        String uid = metadata.getString("uid");
         String addressSpaceName = metadata.getString("addressSpace");
 
         JsonObject status = addressJsonObject.getJsonObject("status");
@@ -578,7 +578,7 @@ public class TestUtils {
             }
         } catch (Exception ignored) {
         }
-        return new Address(addressSpaceName, address, name, type, plan, phase, isReady, messages, uuid);
+        return new Address(addressSpaceName, address, name, type, plan, phase, isReady, messages, uid);
     }
 
     /**
@@ -609,6 +609,8 @@ public class TestUtils {
         log.info("Got address object: {}", addressJsonObject.toString());
         JsonObject metadata = addressJsonObject.getJsonObject("metadata");
         String name = metadata.getString("name");
+        String uid = metadata.getString("uid");
+        String addressSpace = metadata.getString("addressSpace");
         JsonObject spec = addressJsonObject.getJsonObject("spec");
         String address = spec.getString("address");
         String type = spec.getString("type");
@@ -616,7 +618,7 @@ public class TestUtils {
         if (!validDestinationTypes.contains(type)) {
             throw new IllegalStateException(String.format("Unknown Destination type'%s'", type));
         }
-        return new Destination(name, address, type, plan);
+        return new Destination(name, uid, addressSpace, address, type, plan);
     }
 
     /**
